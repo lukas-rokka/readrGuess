@@ -15,10 +15,4 @@ devtools::install_github("lukas-rokka/readrGuess")
 
 ``` r
 library("readrGuess")
-#> Warning: replacing previous import 'dplyr::intersect' by
-#> 'lubridate::intersect' when loading 'readrGuess'
-#> Warning: replacing previous import 'dplyr::union' by 'lubridate::union'
-#> when loading 'readrGuess'
-#> Warning: replacing previous import 'dplyr::setdiff' by 'lubridate::setdiff'
-#> when loading 'readrGuess'
 ```
