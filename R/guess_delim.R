@@ -36,7 +36,6 @@ guess_delim <- function(file, cases=delim_cases(), ...) {
 #' @export
 read_guess <- function(file, ...) {
   guess <- guess_delim(file, ...)
-  print(guess)
   read_delim2(file, guess$delim[1], guess$decimal_mark[1], guess$grouping_mark[1], ...)
 }
 
