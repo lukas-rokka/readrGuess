@@ -1,5 +1,5 @@
 #' readrguess.
 #'
-#' @name readrguess
+#' @name readrGuess
 #' @docType package
 NULL

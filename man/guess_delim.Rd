@@ -4,7 +4,7 @@
 \alias{guess_delim}
 \title{Guesses proper delimiter, decimal mark and gruping mark}
 \usage{
-guess_delim(file, cases = delim_cases(), ...)
+guess_delim(file, locale = NULL, ...)
 }
 \description{
 Guesses proper delimiter, decimal mark and gruping mark

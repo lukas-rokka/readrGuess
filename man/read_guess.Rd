@@ -4,7 +4,7 @@
 \alias{read_guess}
 \title{Read flat file by guessing the formating}
 \usage{
-read_guess(file, ...)
+read_guess(file, locale = NULL, ...)
 }
 \description{
 Read flat file by guessing the formating

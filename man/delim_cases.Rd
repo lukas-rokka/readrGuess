@@ -2,11 +2,11 @@
 % Please edit documentation in R/guess_delim.R
 \name{delim_cases}
 \alias{delim_cases}
-\title{Possible combinations formats}
+\title{Possible combinations of formatting}
 \usage{
 delim_cases()
 }
 \description{
-Possible combinations formats
+Possible combinations of formatting
 }
 

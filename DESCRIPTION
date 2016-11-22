@@ -10,7 +10,8 @@ Description: Guesses the format of flat files by testing testing
 License: MIT + file LICENSE
 Imports:
     dplyr (>= 0.5.0),
-    readr
+    readr (>= 1.0),
+    tibble (>= 1.2)
 Encoding: UTF-8
 LazyData: true
 Suggests:
