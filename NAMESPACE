@@ -3,5 +3,6 @@
 export(delim_cases)
 export(guess_delim)
 export(read_delim2)
+export(read_guess)
 import(dplyr)
 import(readr)
