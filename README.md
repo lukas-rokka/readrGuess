@@ -16,3 +16,9 @@ devtools::install_github("lukas-rokka/readrGuess")
 ``` r
 library("readrGuess")
 ```
+
+### Example
+
+``` r
+read_guess(path_to_a_flat_file)
+```
