@@ -1,6 +1,5 @@
 library(testthat)
-library(tidyvers)
-library(readrguess)
+library(readrGuess)
 
 
-test_check("readrguess")
+test_check("readrGuess")

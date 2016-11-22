@@ -2,6 +2,7 @@
 #'
 #' @import readr
 #' @import dplyr
+#' @import tibble
 #'
 #' @export
 guess_delim <- function(file, locale=NULL, ...) {
@@ -41,7 +42,8 @@ guess_delim <- function(file, locale=NULL, ...) {
 #'
 #' @export
 read_guess <- function(file, locale=NULL, ...) {
-  guess <- guess_delim(file, locale, ...)
+  guess <- guess_delim(file, locale, ...) %>% slice(1)
+
   read_delim2(
     file,
     delim = guess$delim,
@@ -63,7 +65,7 @@ read_delim2 <- function(file, delim, decimal_mark, grouping_mark, col_names, loc
   suppressMessages(readr::read_delim(file, delim, col_names=col_names, locale = locale, ...))
 }
 
-#' Possible combinations formats
+#' Possible combinations of formatting
 #'
 #' @export
 delim_cases <- function() {
