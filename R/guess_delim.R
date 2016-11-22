@@ -4,51 +4,63 @@
 #' @import dplyr
 #'
 #' @export
-guess_delim <- function(file, cases=delim_cases(), ...) {
+guess_delim <- function(file, locale=NULL, ...) {
 
-  cases <- cases %>% mutate(n_cols=NA, n_nonchar_cols=NA)
-
+  cases <- delim_cases() %>% mutate(n_cols=NA, n_nonchar_cols=NA)
 
   for (i in 1:nrow(cases)) {
     case <- cases[i, ]
     #cat("delim: ", case$delim, "\ndecimal_mark: ", case$decimal_mark, "\ngrouping_mark: ", case$grouping_mark, "\n\n")
 
-    #df = read_delim2(file, case$delim, decimal_mark = case$decimal_mark, grouping_mark = case$grouping_mark, ...)
-      #
-     a <- tryCatch({
-       df <- read_delim2(file, case$delim, decimal_mark = case$decimal_mark, grouping_mark = case$grouping_mark, ...)
-       cases$n_cols[i] <- ncol(df)
-       cases$n_nonchar_cols[i] <- sum(lapply(df, class) %>% unlist() == "character")
-     }, warning = function(w) {
-       # cases with warnings are not rectanguler (data.frames)
-       # and therefore  considered as non-likely
-     }, error = function(e) {
-       stop(e)
-     })
+    a <- tryCatch({
+      df <- read_delim2(
+        file,
+        delim = case$delim,
+        decimal_mark = case$decimal_mark,
+        grouping_mark = case$grouping_mark,
+        col_names = case$col_names,
+        locale = locale,
+        ...
+      )
+      cases$n_cols[i] <- ncol(df)
+      cases$n_nonchar_cols[i] <- sum(lapply(df, class) %>% unlist() == "character")
+    }, warning = function(w) {
+      # cases with warnings are not rectanguler (data.frames)
+      # and therefore  considered as non-likely
+    }, error = function(e) {
+      stop(e)
+    })
   }
 
   # choose cases with least non-character columns and most total number of columns
-  cases %>% arrange(n_nonchar_cols, desc(n_cols)) #%>% slice(1:1)
+  cases <- cases %>% arrange(n_nonchar_cols, desc(n_cols), col_names) #%>% slice(1:1)
+
 }
 
 #' Read flat file by guessing the formating
 #'
 #' @export
-read_guess <- function(file, ...) {
-  guess <- guess_delim(file, ...)
-  read_delim2(file, guess$delim[1], guess$decimal_mark[1], guess$grouping_mark[1], ...)
+read_guess <- function(file, locale=NULL, ...) {
+  guess <- guess_delim(file, locale, ...)
+  read_delim2(
+    file,
+    delim = guess$delim,
+    decimal_mark = guess$decimal_mark,
+    grouping_mark = guess$grouping_mark,
+    col_names = guess$col_names,
+    locale = locale,
+    ...
+  )
 }
 
 #' read_delim2
 #'
 #' @export
-read_delim2 <- function(file, delim, decimal_mark, grouping_mark, ...) {
-  suppressMessages(readr::read_delim(
-    file,
-    delim,
-    locale = readr::locale(decimal_mark = decimal_mark, grouping_mark = grouping_mark),
-    ...
-  ))
+read_delim2 <- function(file, delim, decimal_mark, grouping_mark, col_names, locale=NULL, ...) {
+  if(is.null(locale)) locale <- readr::locale()
+  locale$decimal_mark  <- decimal_mark
+  locale$grouping_mark <- grouping_mark
+  suppressMessages(readr::read_delim(file, delim, col_names=col_names, locale = locale, ...))
 }
 
 #' Possible combinations formats
@@ -56,7 +68,7 @@ read_delim2 <- function(file, delim, decimal_mark, grouping_mark, ...) {
 #' @export
 delim_cases <- function() {
   # All combinations to test for
-  tibble::tribble(
+  df <- tibble::tribble(
     ~name,  ~delim, ~decimal_mark, ~grouping_mark,
     "csv",  ",",    ".",           " ",
     "csv2", ";",    ",",           ".",
@@ -68,5 +80,8 @@ delim_cases <- function() {
     "tsv3", "\t",   ",",           ".",
     "tsv4", "\t",   ",",           " "
   )
+  df %>% mutate(col_names=TRUE) %>%
+    bind_rows(df %>% mutate(col_names=FALSE))
+
 }
 

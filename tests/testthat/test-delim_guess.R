@@ -15,21 +15,31 @@ test_df <- tibble::tibble(
 
 
 # read caeses to test
-cases <- delim_cases()
+for(col_names2 in c(TRUE, FALSE)) {
+  context(paste0("test with data frame that has col_names = ", col_names2))
+  cases <- delim_cases() %>% filter(col_names==col_names2)
 
-for (i in 1:nrow(cases)) {
-  # format the test as a string
-  test_str <- readr::format_delim(
-    test_df %>%
-      dplyr::mutate_if(is.numeric, format, trim=TRUE, big.mark=cases$grouping_mark[i], decimal.mark=cases$decimal_mark[i]),
-    delim=cases$delim[i],
-    col_names=TRUE)
+  for (i in 1:nrow(cases)) {
+    # format the test as a string
+    test_str <- readr::format_delim(
+      test_df %>%
+        dplyr::mutate_if(is.numeric, format, trim=TRUE, big.mark=cases$grouping_mark[i], decimal.mark=cases$decimal_mark[i]),
+      delim=cases$delim[i],
+      col_names=col_names2)
 
-  # run the guess_delim
-  test_that(paste0("testing ", cases$name[i], ": delim = '", cases$delim[i], "' decimal_mark = '",
-                   cases$decimal_mark[i], "' grouping_mark = '", cases$grouping_mark[i], "'"), {
-    r <- guess_delim(test_str)
-    expect_identical(cases$name[i], r$name[1])
-  })
+    # run the guess_delim
+    test_that(
+      paste0(
+        "testing ", cases$name[i],
+        " delim = '", cases$delim[i],
+        "' decimal_mark = '", cases$decimal_mark[i],
+        "' grouping_mark = '", cases$grouping_mark[i], "'"
+      ),
+      {
+        r <- guess_delim(test_str)
+        expect_identical(cases$name[i], r$name[1])
+        expect_identical(cases$col_names[i], r$col_names[1])
+      }
+    )
+  }
 }
-
