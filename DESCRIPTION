@@ -1,0 +1,18 @@
+Package: readrGuess
+Type: Package
+Title: Guesses the format of flat files
+Version: 0.1.0
+Author: person("Lukas", "Lundstrom", email = "lukas.rokka@gmail.com", role = c("aut", "cre"))
+Maintainer: Lukas Lundstrom <lukas.rokka@gmail.com>
+Description: Guesses the format of flat files by testing testing
+   which combination of delimeter, decimal mark and grouping mark
+   gives the most sensible data frame. 
+License: MIT + file LICENSE
+Imports:
+    dplyr (>= 0.5.0),
+    readr
+Encoding: UTF-8
+LazyData: true
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
