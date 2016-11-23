@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
-Tests different options for formatting the delimiter, decimal mark, grouping mark and column header. Chooses the combinations that creates a data frame that make most sense, based on the assumptions:
+Guesses the formatting of tabular/flat files by testing different options for formatting the delimiter, decimal mark, grouping mark and column header. Chooses the combinations that creates a data frame that make most sense, based on the assumptions:
 
 * That data is rectangular, delimiters that fails to read some of the columns are skipped
 * That formatting that gives more non-character columns is more likely to be right
@@ -20,6 +20,7 @@ Tests different options for formatting the delimiter, decimal mark, grouping mar
 
 For delimiters following are possible: tab (\\t), comma (,) and semicolon (;). As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 18 possible formatting combinations are tested. 
 
+This Shiny app https://rokka.shinyapps.io/smartei demonstrates how this package (together with https://github.com/ijlyttle/shinypod) can be used to create an tabular/flat file reader that you can throw almost any file at - and it will in most cases guess the right formatting for you.
 
 ## Quick start
 
