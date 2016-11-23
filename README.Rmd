@@ -13,10 +13,10 @@ knitr::opts_chunk$set(
 ```
 Tests different options for formatting the delimiter, decimal mark, grouping mark and column header. Chooses the combinations that creates a data frame that make most sense, based on the assumptions:
 
-* That data is rectangular, formatting that fail to read some of the columns are skipped
+* That data is rectangular, delimiters that fails to read some of the columns are skipped
 * That formatting that gives more non-character columns is more likely to be right
 * That formatting that gives more total number of columns is more likely to be right
-* That if having columns header gives same result, then it more likely that headers are not present
+* That if having columns header doesn't do any difference, then it more likely that headers are not present
 
 For delimiters following are possible: tab (\\t), comma (,) and semicolon (;). As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 18 possible formatting combinations are tested. 
 
@@ -34,20 +34,20 @@ devtools::install_github("lukas-rokka/readrGuess")
 ```{r}
 library(readr)
 library(readrGuess)
-
-
-# all formatting combinations that are currently tested
-delim_cases()
 ```
 
 ### Example
 
 ```{r}
+
+# Print all formatting combinations that are currently tested
+delim_cases()
+
 # Create a date frame and format it into a semicolon delimited string
 test_str <- readr::format_delim(
   data.frame(a=runif(1000, -100, 100), b="a", c=1, d=TRUE), 
   ";")
 
-# read the string and guess the right formatting
+# Read the string and guess the right formatting
 read_guess(test_str)
 ```
