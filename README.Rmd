@@ -18,6 +18,9 @@ Tests different options for formatting the delimiter, decimal mark, grouping mar
 * That formatting that gives more total number of columns is more likely to be right
 * That if having columns header gives same result, then it more likely that headers are not present
 
+For delimiters following are possible: tab (\\t), comma (,) and semicolon (;). As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 18 possible formatting combinations are tested. 
+
+
 ## Quick start
 
 ### Install
@@ -29,11 +32,22 @@ devtools::install_github("lukas-rokka/readrGuess")
 ```
 
 ```{r}
-library("readrGuess")
+library(readr)
+library(readrGuess)
+
+
+# all formatting combinations that are currently tested
+delim_cases()
 ```
 
 ### Example
 
-```{r, eval=FALSE}
-read_guess(path_to_a_flat_file)
+```{r}
+# Create a date frame and format it into a semicolon delimited string
+test_str <- readr::format_delim(
+  data.frame(a=runif(1000, -100, 100), b="a", c=1, d=TRUE), 
+  ";")
+
+# read the string and guess the right formatting
+read_guess(test_str)
 ```

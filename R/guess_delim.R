@@ -43,6 +43,10 @@ guess_delim <- function(file, locale=NULL, ...) {
 #' @export
 read_guess <- function(file, locale=NULL, ...) {
   guess <- guess_delim(file, locale, ...) %>% slice(1)
+  message("Delimiter: '", guess$delim,
+          "', decimal mark: '", guess$decimal_mark,
+          "', grouping mark: '", guess$grouping_mark,
+          "', column headers: ", guess$col_names)
 
   read_delim2(
     file,
