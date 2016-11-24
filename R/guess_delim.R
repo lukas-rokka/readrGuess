@@ -9,6 +9,8 @@ guess_delim <- function(file, locale=NULL, ...) {
 
   cases <- delim_cases() %>% mutate(n_cols=NA, n_nonchar_cols=NA)
 
+  if(is.null(locale)) locale <- readr::locale()
+
   for (i in 1:nrow(cases)) {
     case <- cases[i, ]
     #cat("delim: ", case$delim, "\ndecimal_mark: ", case$decimal_mark, "\ngrouping_mark: ", case$grouping_mark, "\n\n")
