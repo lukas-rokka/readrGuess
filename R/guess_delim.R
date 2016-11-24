@@ -64,7 +64,7 @@ read_guess <- function(file, locale=NULL, ...) {
 #' read_delim2
 #'
 #' @export
-read_delim2 <- function(file, delim, decimal_mark, grouping_mark, col_names, locale=NULL, ...) {
+read_delim2 <- function(file, delim=",", decimal_mark=".", grouping_mark=" ", col_names=TRUE, locale=NULL, ...) {
   if(is.null(locale)) locale <- readr::locale()
   locale$decimal_mark  <- decimal_mark
   locale$grouping_mark <- grouping_mark
