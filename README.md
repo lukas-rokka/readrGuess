@@ -11,7 +11,7 @@ For delimiters following are possible: tab (\\t), comma (,) and semicolon (;). A
 
 Will not work with fixed width or space delimited files.
 
-This Shiny app <https://rokka.shinyapps.io/smartei> demonstrates how this package (together with <https://github.com/ijlyttle/shinypod>) can be used to create an tabular/flat file reader that you can throw almost any file at - and it will in most cases guess the right formatting for you.
+This Shiny app <https://rokka.shinyapps.io/smartep> demonstrates how this package (together with <https://github.com/ijlyttle/shinypod>) can be used to create an tabular/flat file reader that you can throw almost any file at - and it will in most cases guess the right formatting for you.
 
 Quick start
 -----------
@@ -66,17 +66,17 @@ test_str <- readr::format_delim(
 read_guess(test_str)
 #> Delimiter: ';', decimal mark: '.', grouping mark: ',', column headers: TRUE
 #> # A tibble: 1,000 × 4
-#>            a     b     c     d
-#>        <dbl> <chr> <dbl> <lgl>
-#> 1   14.26661     a     1  TRUE
-#> 2   94.81796     a     1  TRUE
-#> 3   81.63625     a     1  TRUE
-#> 4  -72.97636     a     1  TRUE
-#> 5  -30.99609     a     1  TRUE
-#> 6  -51.36472     a     1  TRUE
-#> 7  -13.93411     a     1  TRUE
-#> 8   90.44644     a     1  TRUE
-#> 9   58.58997     a     1  TRUE
-#> 10 -99.33297     a     1  TRUE
+#>             a     b     c     d
+#>         <dbl> <chr> <dbl> <lgl>
+#> 1  -57.068252     a     1  TRUE
+#> 2  -51.906912     a     1  TRUE
+#> 3   43.031646     a     1  TRUE
+#> 4  -62.427019     a     1  TRUE
+#> 5  -66.730793     a     1  TRUE
+#> 6  -23.049586     a     1  TRUE
+#> 7   24.229622     a     1  TRUE
+#> 8    4.856572     a     1  TRUE
+#> 9   90.756490     a     1  TRUE
+#> 10  -7.968042     a     1  TRUE
 #> # ... with 990 more rows
 ```
