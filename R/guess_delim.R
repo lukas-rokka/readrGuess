@@ -13,10 +13,9 @@ guess_delim <- function(file, locale=NULL, ...) {
 
   for (i in 1:nrow(cases)) {
     case <- cases[i, ]
-    #cat("delim: ", case$delim, "\ndecimal_mark: ", case$decimal_mark, "\ngrouping_mark: ", case$grouping_mark, "\n\n")
 
-    a <- tryCatch({
-      df <- read_delim2(
+    tryCatch({
+      df <- (read_delim2(
         file,
         delim = case$delim,
         decimal_mark = case$decimal_mark,
@@ -24,7 +23,7 @@ guess_delim <- function(file, locale=NULL, ...) {
         col_names = case$col_names,
         locale = locale,
         ...
-      )
+      ))
       cases$n_cols[i] <- ncol(df)
       cases$n_nonchar_cols[i] <- sum(lapply(df, class) %>% unlist() == "character")
     }, warning = function(w) {
@@ -39,6 +38,7 @@ guess_delim <- function(file, locale=NULL, ...) {
   cases <- cases %>% arrange(n_nonchar_cols, desc(n_cols), col_names) #%>% slice(1:1)
 
 }
+
 
 #' Read flat file by guessing the formating
 #'
@@ -68,10 +68,16 @@ read_delim2 <- function(file, delim=",", decimal_mark=".", grouping_mark=" ", co
   if(is.null(locale)) locale <- readr::locale()
   locale$decimal_mark  <- decimal_mark
   locale$grouping_mark <- grouping_mark
-  suppressMessages(readr::read_delim(file, delim, col_names=col_names, locale = locale, ...))
+  if (delim=="") {
+    # capture.output to not litter the screen
+    not_used <- capture.output(df <- readr::read_table(file, col_names=col_names, locale = locale, ...))
+    return(df)
+  } else {
+    suppressMessages(readr::read_delim(file, delim, col_names=col_names, locale = locale, ...))
+  }
 }
 
-#' Possible combinations of formatting
+#' Possible combinations of formatting delimted files
 #'
 #' @export
 delim_cases <- function() {
@@ -86,10 +92,11 @@ delim_cases <- function() {
     "tsv",  "\t",   ".",           ",",
     "tsv2", "\t",   ".",           " ",
     "tsv3", "\t",   ",",           ".",
-    "tsv4", "\t",   ",",           " "
+    "tsv4", "\t",   ",",           " ",
+    "wsp",  "",     ".",           ",",
+    "wsp2", "",     ",",           "."
   )
   df %>% mutate(col_names=TRUE) %>%
     bind_rows(df %>% mutate(col_names=FALSE))
 
 }
-
