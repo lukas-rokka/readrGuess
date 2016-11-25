@@ -7,7 +7,7 @@
 #' @export
 guess_delim <- function(file, locale=NULL, ...) {
 
-  cases <- delim_cases() %>% mutate(n_cols=NA, n_nonchar_cols=NA)
+  cases <- delim_cases() %>% mutate(n_cols=NA, n_char_cols=NA)
 
   if(is.null(locale)) locale <- readr::locale()
 
@@ -25,7 +25,7 @@ guess_delim <- function(file, locale=NULL, ...) {
         ...
       ))
       cases$n_cols[i] <- ncol(df)
-      cases$n_nonchar_cols[i] <- sum(lapply(df, class) %>% unlist() == "character")
+      cases$n_char_cols[i] <- sum(lapply(df, class) %>% unlist() == "character")
     }, warning = function(w) {
       # cases with warnings are not rectanguler (data.frames)
       # and therefore  considered as non-likely
@@ -34,8 +34,8 @@ guess_delim <- function(file, locale=NULL, ...) {
     })
   }
 
-  # choose cases with least non-character columns and most total number of columns
-  cases <- cases %>% arrange(n_nonchar_cols, desc(n_cols), col_names) #%>% slice(1:1)
+  # choose case with most total number of columns and with least non-character columns
+  cases <- cases %>% arrange(desc(n_cols), n_char_cols, col_names) #%>% slice(1:1)
 
 }
 

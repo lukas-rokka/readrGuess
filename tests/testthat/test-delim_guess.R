@@ -6,6 +6,7 @@ context("test delimited data frame")
 # set up and testing data frame
 test_delim <- tibble::tibble(
   chr1 = c("a", "b", "c"),
+  chr2 = c("a", "b", "c"),
   lgl1 = c(TRUE, FALSE, TRUE),
   date1= lubridate::ymd(20160101, 20160102, 20160103),
   dttm1= lubridate::ymd_h(2016010112, 2016010213, 2016010314),
