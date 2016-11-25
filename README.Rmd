@@ -18,9 +18,7 @@ Guesses the formatting of tabular/flat files by testing different options for fo
 * That formatting that gives more total number of columns is more likely to be right
 * That if having columns header doesn't do any difference, then it more likely that headers are not present
 
-For delimiters following are possible: tab (\\t), comma (,) and semicolon (;). As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 18 possible formatting combinations are tested. 
-
-Will not work with fixed width or space delimited files. 
+For delimiters following are possible: tab (\\t), comma (,), semicolon (;) and whitespace/fixed width. As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 22 possible formatting combinations are tested. 
 
 This Shiny app https://rokka.shinyapps.io/smartep demonstrates how this package (together with https://github.com/ijlyttle/shinypod) can be used to create an tabular/flat file reader that you can throw almost any file at - and it will in most cases guess the right formatting for you.
 

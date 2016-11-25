@@ -7,9 +7,7 @@ Guesses the formatting of tabular/flat files by testing different options for fo
 -   That formatting that gives more total number of columns is more likely to be right
 -   That if having columns header doesn't do any difference, then it more likely that headers are not present
 
-For delimiters following are possible: tab (\\t), comma (,) and semicolon (;). As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 18 possible formatting combinations are tested.
-
-Will not work with fixed width or space delimited files.
+For delimiters following are possible: tab (\\t), comma (,), semicolon (;) and whitespace/fixed width. As decimal mark: comma (,) and dot (.). As big number grouping mark: comma (,), dot (.) and space ( ) are tested. Column headers existence is also tested for, altogether 22 possible formatting combinations are tested.
 
 This Shiny app <https://rokka.shinyapps.io/smartep> demonstrates how this package (together with <https://github.com/ijlyttle/shinypod>) can be used to create an tabular/flat file reader that you can throw almost any file at - and it will in most cases guess the right formatting for you.
 
@@ -35,7 +33,7 @@ library(readrGuess)
 
 # Print all formatting combinations that are currently tested
 delim_cases()
-#> # A tibble: 18 × 5
+#> # A tibble: 22 × 5
 #>     name delim decimal_mark grouping_mark col_names
 #>    <chr> <chr>        <chr>         <chr>     <lgl>
 #> 1    csv     ,            .                    TRUE
@@ -47,15 +45,8 @@ delim_cases()
 #> 7   tsv2     \t            .                    TRUE
 #> 8   tsv3     \t            ,             .      TRUE
 #> 9   tsv4     \t            ,                    TRUE
-#> 10   csv     ,            .                   FALSE
-#> 11  csv2     ;            ,             .     FALSE
-#> 12  csv3     ;            ,                   FALSE
-#> 13  csv4     ;            .             ,     FALSE
-#> 14  csv5     ;            .                   FALSE
-#> 15   tsv     \t            .             ,     FALSE
-#> 16  tsv2     \t            .                   FALSE
-#> 17  tsv3     \t            ,             .     FALSE
-#> 18  tsv4     \t            ,                   FALSE
+#> 10   wsp                  .             ,      TRUE
+#> # ... with 12 more rows
 
 # Create a date frame and format it into a semicolon delimited string
 test_str <- readr::format_delim(
@@ -68,15 +59,15 @@ read_guess(test_str)
 #> # A tibble: 1,000 × 4
 #>             a     b     c     d
 #>         <dbl> <chr> <dbl> <lgl>
-#> 1  -57.068252     a     1  TRUE
-#> 2  -51.906912     a     1  TRUE
-#> 3   43.031646     a     1  TRUE
-#> 4  -62.427019     a     1  TRUE
-#> 5  -66.730793     a     1  TRUE
-#> 6  -23.049586     a     1  TRUE
-#> 7   24.229622     a     1  TRUE
-#> 8    4.856572     a     1  TRUE
-#> 9   90.756490     a     1  TRUE
-#> 10  -7.968042     a     1  TRUE
+#> 1  -91.699806     a     1  TRUE
+#> 2   96.408067     a     1  TRUE
+#> 3  -78.520773     a     1  TRUE
+#> 4   58.012569     a     1  TRUE
+#> 5   38.949342     a     1  TRUE
+#> 6   42.520827     a     1  TRUE
+#> 7    1.524851     a     1  TRUE
+#> 8   27.137113     a     1  TRUE
+#> 9  -33.367961     a     1  TRUE
+#> 10 -87.766702     a     1  TRUE
 #> # ... with 990 more rows
 ```

@@ -1,6 +1,6 @@
 Package: readrGuess
 Type: Package
-Title: Guesses the format of flat files
+Title: Guesses the format of flat/tabular files
 Version: 0.1.0
 Author: person("Lukas", "Lundstrom", email = "lukas.rokka@gmail.com", role = c("aut", "cre"))
 Maintainer: Lukas Lundstrom <lukas.rokka@gmail.com>
